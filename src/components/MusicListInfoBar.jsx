@@ -6,11 +6,11 @@ function MusicListInfoBar() {
   return (
     <Box sx={BarStyle.container}>
       <Flex sx={BarStyle.lists}>
-        <Text ml={`120px`} width={`20%`}>
+        <Text width={`20%`} id="artist" sx={BarStyle.text}>
           Artist
         </Text>
         <Text width={`20%`}>Title</Text>
-        <Text width={`20%`}>Genere</Text>
+        <Text width={`20%`}>Genre</Text>
         <Text width={`35%`}>Date added</Text>
       </Flex>
     </Box>

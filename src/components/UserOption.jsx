@@ -1,4 +1,5 @@
 import React from "react";
+import { css } from "@emotion/react";
 import { userOptionsStyle } from "../assets/Style";
 import { BiPlus, BiSearch } from "react-icons/bi";
 import { Box, Card, Button, Text, Flex } from "rebass";
@@ -19,7 +20,12 @@ function UserOption() {
           placeholder="search music"
           sx={userOptionsStyle.Input}
         />
-        <BiSearch color="#6D7468" size={`20px`} />
+        <BiSearch
+          id="searchicon"
+          color="#6D7468"
+          size={`20px`}
+          style={{ marginTop: `3px` }}
+        />
       </Flex>
     </Flex>
   );
