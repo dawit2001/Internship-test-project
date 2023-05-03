@@ -4,24 +4,43 @@ import {
   MusicListInfoBar,
   Header,
   AddMusicForm,
-  UpdateMusicForm,
+  // UpdateMusicForm,
 } from "./components";
+import { useSelector } from "react-redux";
+import { SelectState } from "./Slices/FormSlice";
 import { AppStyle } from "./assets/Style";
 import { Box, Card } from "rebass";
-console.log(new Date().toLocaleString(`default`, { month: "short" }));
+import logo from "./assets/logo.svg";
 function App() {
+  const formStates = useSelector(SelectState);
+  // console.log(formStates);
+
   return (
     <Card sx={AppStyle.card}>
       <Box className="App" sx={AppStyle.box}>
         <Header />
         <UserOption />
-        <AddMusicForm />
+        {formStates.isMusicAdded && <AddMusicForm />}
         <MusicListInfoBar />
         <MusicList />
-        {/* <UpdateMusicForm /> */}
+        {formStates.isMusicUpdated && <UpdateMusicForm />}
       </Box>
     </Card>
   );
 }
 
 export default App;
+
+// const fetchdata = async () => {
+//   try {
+//     const response = await fetch("https://jsonplaceholder.typicode.com/posts");
+//     const data = await response.json();
+//     console.log(data);
+//   } catch (error) {
+//     console.log(error.message);
+//   }
+// };
+// fetchdata();
+
+// const imgurl = URL.createObjectURL(logo);
+// console.log(imgurl);

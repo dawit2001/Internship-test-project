@@ -4,7 +4,6 @@ import { Headercss } from "../assets/Style";
 import { Card, Box, Image, Heading, Flex } from "rebass";
 
 function Header() {
-  console.log("header");
   return (
     <Card sx={Headercss.Header}>
       <Image src={logo} sx={Headercss.Logo} />

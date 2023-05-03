@@ -1,14 +1,21 @@
-import React from "react";
-import { css } from "@emotion/react";
+import { useDispatch } from "react-redux";
+import { AddForm } from "../Slices/FormSlice";
 import { userOptionsStyle } from "../assets/Style";
 import { BiPlus, BiSearch } from "react-icons/bi";
 import { Box, Card, Button, Text, Flex } from "rebass";
 import { Input } from "@rebass/forms";
 
 function UserOption() {
+  const dispatch = useDispatch();
+
   return (
     <Flex sx={userOptionsStyle.ContainerFlex}>
-      <Button sx={userOptionsStyle.Button}>
+      <Button
+        sx={userOptionsStyle.Button}
+        onClick={() => {
+          dispatch(AddForm(true));
+        }}
+      >
         <Flex>
           <BiPlus color="#0d0d0c"></BiPlus>
           <Text color={`white`}>Add Music</Text>

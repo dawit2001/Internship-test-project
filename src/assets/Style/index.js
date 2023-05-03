@@ -111,14 +111,18 @@ export const userOptionsStyle = {
   searchIcon: css({
     marginTop: "8px",
   }),
-  Button: css({
-    border: `none`,
-    backgroundColor: `none`,
-    background: `transparent`,
-    cursor: `pointer`,
-    fontFamily: `'Montserrat', sans-serif;
+  Button: css`
+    border: none;
+    background-color: none;
+    background: transparent;
+    cursor: pointer;
+    fontFamily: 'Montserrat'; sans-serif;
+    &:hover{
+      background-color:#648B82;
+      border-radius:120px;
+    }
     `,
-  }),
+
   InputFlex: css({
     backgroundColor: `white`,
     height: `25px`,
@@ -146,7 +150,7 @@ export const MusicListStyle = {
     padding-top: 2px;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1rem;
     borderbottomleftradius: 10px;
     borderbottomrightradius: 10px;
 
@@ -176,7 +180,7 @@ export const MusicListStyle = {
 
   List: css({
     width: `100%`,
-    height: `60px`,
+    height: `90px`,
     display: `flex`,
     backgroundColor: `#3A4840`,
     padding: `5px`,
@@ -205,23 +209,26 @@ export const MusicListStyle = {
     backgroundColor: `blue`,
   }),
   ButtonContainer: css({
-    width: `30px`,
+    width: `100px`,
     display: `flex`,
-    height: `30px`,
+    justifyContent: `center`,
+    alignItems: `center`,
     position: `absolute`,
     top: `0`,
-    left: `90%`,
-    gap: `1rem`,
+    left: `89%`,
+
     [mq[2]]: {
       position: `absolute`,
       top: `0`,
       left: `85%`,
       gap: `1rem`,
+      width: `60px`,
     },
     [mq[1]]: {
+      width: `50px`,
       position: `absolute`,
       top: `0`,
-      left: `85%`,
+      left: `86%`,
       display: `flex`,
       flexDirection: "column",
       gap: `0`,
@@ -229,6 +236,16 @@ export const MusicListStyle = {
   }),
   Text: css({
     wordBreak: `break-all`,
+  }),
+  DateText: css({
+    wordBreak: `break-all`,
+    marginRight: `90px`,
+    [mq[2]]: {
+      marginRight: `70px`,
+    },
+    [mq[1]]: {
+      marginRight: `50px`,
+    },
   }),
 };
 // styles for form components
@@ -351,6 +368,10 @@ export const AddformStyle = {
       cursor: pointer;
     }
     #btn1:hover {
+      background-color: #11c3ea;
+    }
+    #btn1:disabled {
+      opacity: 0.4;
       background-color: #11c3ea;
     }
     #btn2:hover {

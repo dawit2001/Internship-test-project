@@ -1,14 +1,34 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { selectMusicLists } from "../Slices/MusicListSlice";
 import { MusicListStyle } from "../assets/Style";
+import { FetchMusicStart } from "../Slices/MusicListSlice";
 import logo from "../assets/logo.svg";
-import { MdDelete, MdEdit } from "react-icons/md";
 import { Image, Card, Box, Flex, Text, Button } from "rebass";
+import DateAdded from "./DateAdded";
+import DeleteUpdateButton from "./DeleteUpdateButton";
 function MusicList() {
-  const MusicLists = useSelector(selectMusicLists);
+  const dispatch = useDispatch();
+  const { MusicList, Loading, error } = useSelector(selectMusicLists);
 
-  const renderLists = MusicLists.map((music) => (
+  useEffect(() => {
+    // console.log("dispatch called");
+    dispatch(FetchMusicStart());
+  }, [dispatch]);
+  // console.log(MusicList);
+
+  if (Loading) {
+    return (
+      <Box sx={MusicListStyle.Loadingstyle}>
+        <Text>Loading...</Text>
+      </Box>
+    );
+  }
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+  const renderLists = MusicList.map((music) => (
     <Card sx={MusicListStyle.List} key={music.id}>
       <Image src={logo} sx={MusicListStyle.Image} />
       <Text width={`20%`} id="artist" sx={MusicListStyle.text}>
@@ -18,17 +38,11 @@ function MusicList() {
         {music.Title}
       </Text>
       <Text width={`20%`}>{music.Genre}</Text>
-      <Text width={`25%`}>{music.date}</Text>
-      <Card sx={MusicListStyle.ButtonContainer}>
-        <Button bg={`transparent`} sx={{ cursor: `pointer` }}>
-          <MdDelete size={`20px`} color={`gray`}></MdDelete>
-          <Text fontSize={`10px`}>delete</Text>
-        </Button>
-        <Button bg={`transparent`} sx={{ cursor: `pointer` }}>
-          <MdEdit size={`20px`} color={`gray`}></MdEdit>
-          <Text fontSize={`10px`}>Edit</Text>
-        </Button>
-      </Card>
+      {/* <audio controls>
+        <source type="audio/mpeg" />
+      </audio> */}
+      <DateAdded timeStamp={music.Date} sx={MusicListStyle.DateText} />
+      <DeleteUpdateButton sx={MusicListStyle.ButtonContainer} Id={music.id} />
     </Card>
   ));
   return <Box sx={MusicListStyle.container}>{renderLists}</Box>;

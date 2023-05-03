@@ -1,26 +1,26 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { nanoid } from "@reduxjs/toolkit";
-import { musicAdded } from "../../Slices/MusicListSlice";
-
+import { AddForm } from "../../Slices/FormSlice";
+import { addMusicStart } from "../../Slices/MusicListSlice";
+// import { musicAdded } from "../../Slices/MusicListSlice";
 import { AddformStyle } from "../../assets/Style";
-import { FaImage, FaTimes, FaMusic } from "react-icons/fa";
-import { Input, Label } from "@rebass/forms";
-import { Box, Card, Button, Flex, Text } from "rebass";
+import { FaImage, FaMusic } from "react-icons/fa";
+import { Label } from "@rebass/forms";
+import { Box, Button, Flex, Text } from "rebass";
 
 function AddMusicForm() {
   const dispatch = useDispatch();
   const [MusicList, setMusicList] = useState({
+    Avatar: "",
     Artist: "",
     Title: "",
     Album: "",
     Genre: "",
-    date: "",
+    Audio: "",
   });
 
   //handlind change of input values
   const inputChangeHandler = (event) => {
-    console.log("inputchangehandler");
     switch (event.target.name) {
       case "artist":
         setMusicList((prevState) => ({
@@ -47,20 +47,16 @@ function AddMusicForm() {
         }));
         break;
     }
-    setMusicList((prevState) => ({
-      ...prevState,
-      date: `${new Date().toLocaleString("default", {
-        month: "short",
-      })}/${new Date().getDate()}/${new Date().getFullYear()}`,
-    }));
   };
 
   // handling form submission
   const onAddMusic = (event) => {
     event.preventDefault();
     if (MusicList) {
-      dispatch(musicAdded(MusicList));
+      dispatch(addMusicStart(MusicList));
+      // console.log(MusicList);
     }
+    dispatch(AddForm(false));
     setMusicList({});
   };
   const canAdd =
@@ -71,9 +67,19 @@ function AddMusicForm() {
 
   return (
     <>
-      <Box sx={AddformStyle.backdropBox}></Box>
+      <Box
+        sx={AddformStyle.backdropBox}
+        onClick={() => {
+          dispatch(AddForm(false));
+        }}
+      ></Box>
       <Box sx={AddformStyle.container}>
-        <Flex sx={AddformStyle.FormContainer} as={`form`} onSubmit={onAddMusic}>
+        <Flex
+          sx={AddformStyle.FormContainer}
+          as={`form`}
+          onSubmit={onAddMusic}
+          method="post"
+        >
           <Box sx={AddformStyle.ImageBox}>
             <Label htmlFor="profile">
               <FaImage size={`100px`} />
@@ -135,7 +141,15 @@ function AddMusicForm() {
               >
                 ADD
               </Button>
-              <Button id="btn2" width={`110px`} bg={`#E01D1D`}>
+              <Button
+                id="btn2"
+                width={`110px`}
+                bg={`#E01D1D`}
+                onClick={(event) => {
+                  event.preventDefault();
+                  dispatch(AddForm(false));
+                }}
+              >
                 CANCEL
               </Button>
             </Box>
