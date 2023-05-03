@@ -9,23 +9,44 @@ import DateAdded from "./DateAdded";
 import DeleteUpdateButton from "./DeleteUpdateButton";
 function MusicList() {
   const dispatch = useDispatch();
-  const { MusicList, Loading, error } = useSelector(selectMusicLists);
-
+  const { MusicList, searchedMusic, isSearching, Loading, error } =
+    useSelector(selectMusicLists);
   useEffect(() => {
-    // console.log("dispatch called");
     dispatch(FetchMusicStart());
   }, [dispatch]);
-  // console.log(MusicList);
 
-  if (Loading) {
-    return (
-      <Box sx={MusicListStyle.Loadingstyle}>
-        <Text>Loading...</Text>
-      </Box>
-    );
-  }
-  if (error) {
-    return <div>{error}</div>;
+  // rendering searched Musics
+
+  let renderSearchMusic;
+  if (searchedMusic && isSearching) {
+    renderSearchMusic = searchedMusic.map((music) => {
+      if (music) {
+        return (
+          <Card sx={MusicListStyle.List} key={music.id}>
+            <Image src={logo} sx={MusicListStyle.Image} />
+            <Text width={`20%`} id="artist" sx={MusicListStyle.text}>
+              {music.Artist}
+            </Text>
+            <Text width={`20%`} sx={MusicListStyle.Text}>
+              {music.Title}
+            </Text>
+            <Text width={`20%`} sx={MusicListStyle.Text}>
+              {music.Album}
+            </Text>
+            <Text width={`20%`} sx={MusicListStyle.text}>
+              {music.Genre}
+            </Text>
+            {/* <audio controls>
+      </audio> */}
+            <DateAdded timeStamp={music.Date} sx={MusicListStyle.DateText} />
+            <DeleteUpdateButton
+              sx={MusicListStyle.ButtonContainer}
+              Id={music.id}
+            />
+          </Card>
+        );
+      }
+    });
   }
 
   const renderLists = MusicList.map((music) => (
@@ -37,7 +58,12 @@ function MusicList() {
       <Text width={`20%`} sx={MusicListStyle.Text}>
         {music.Title}
       </Text>
-      <Text width={`20%`}>{music.Genre}</Text>
+      <Text width={`20%`} sx={MusicListStyle.Text}>
+        {music.Album}
+      </Text>
+      <Text width={`20%`} sx={MusicListStyle.text}>
+        {music.Genre}
+      </Text>
       {/* <audio controls>
         <source type="audio/mpeg" />
       </audio> */}
@@ -45,7 +71,19 @@ function MusicList() {
       <DeleteUpdateButton sx={MusicListStyle.ButtonContainer} Id={music.id} />
     </Card>
   ));
-  return <Box sx={MusicListStyle.container}>{renderLists}</Box>;
+  return (
+    <Box sx={MusicListStyle.container}>
+      {Loading && <div>Loading...</div>}
+      {!isSearching && renderLists}
+      {MusicList.length === 0 && (
+        <Text width={`50%`} sx={MusicListStyle.text} color={`white`}>
+          NO MUSIC PLEASE ENTER MUSIC
+        </Text>
+      )}
+      {isSearching && renderSearchMusic}
+      {error && <div>{error}</div>}
+    </Box>
+  );
 }
 
 export default MusicList;

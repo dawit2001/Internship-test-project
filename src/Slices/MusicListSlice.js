@@ -1,19 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { nanoid } from "@reduxjs/toolkit";
 
 //
-const initialState = {
+export const initialState = {
   MusicList: [],
+  searchedMusic: [],
+  isSearching: false,
   Loading: false,
   error: null,
 };
 
+//
 const MusicListSlice = createSlice({
   name: "music",
   initialState,
   reducers: {
+    // reducers to fetch Music lists data
+
     FetchMusicStart(state) {
-      // console.log("saga started");
       state.Loading = true;
       state.error = null;
     },
@@ -27,6 +30,8 @@ const MusicListSlice = createSlice({
       state.error = action.payload;
     },
 
+    //  reducers to add music
+
     addMusicStart(state) {
       return {
         ...state,
@@ -37,10 +42,7 @@ const MusicListSlice = createSlice({
     addMusicSuccess(state, action) {
       return {
         ...state,
-        MusicList: [
-          ...state.MusicList,
-          { id: nanoid(), Date: new Date().toISOString(), ...action.payload },
-        ],
+        MusicList: [...state.MusicList, { ...action.payload }],
         Loading: false,
       };
     },
@@ -51,11 +53,81 @@ const MusicListSlice = createSlice({
         Loading: false,
       };
     },
+
+    // reducers to update Music list data
+
+    updateMusicStart(state) {
+      return {
+        ...state,
+        Loading: true,
+        error: null,
+      };
+    },
+    updateMusicSuccess(state, action) {
+      return {
+        ...state,
+        MusicList: [
+          ...state.MusicList.map((music) => {
+            if (music.id === action.payload.id) {
+              music = action.payload;
+            }
+            return music;
+          }),
+        ],
+        Loading: false,
+      };
+    },
+    updateMusicFaliure(state, action) {
+      return {
+        ...state,
+        error: action.payload,
+        Loading: false,
+      };
+    },
+
+    // reducers to delete Music list data
+
+    deleteMusicStart(state) {
+      return {
+        ...state,
+        Loading: true,
+        error: null,
+      };
+    },
+    deleteMusicSuccess(state, action) {
+      return {
+        ...state,
+        MusicList: [
+          ...state.MusicList.filter((music) => music.id !== action.payload),
+        ],
+        Loading: false,
+      };
+    },
+    deleteMusicFaliure(state, action) {
+      return {
+        ...state,
+        Loading: false,
+        error: action.payload,
+      };
+    },
+    // reducers to search for music
+    InputSearchMusic(state, action) {
+      state.isSearching = action.payload;
+    },
+    searchMusic(state, action) {
+      state.searchedMusic = [
+        ...state.MusicList.map((music) => {
+          if (music.Artist.includes(action.payload)) return music;
+          else if (music.Title.includes(action.payload)) return music;
+          else if (music.Album.includes(action.payload)) return music;
+          else if (music.Genre.includes(action.payload)) return music;
+        }),
+      ];
+    },
   },
 });
 
 export const selectMusicLists = (state) => {
-  // console.log(state);
   return state.MusicData;
 };
 export const {
@@ -65,68 +137,14 @@ export const {
   fetchMusicFaliure,
   fetchMusicSuccess,
   FetchMusicStart,
+  updateMusicFaliure,
+  updateMusicStart,
+  updateMusicSuccess,
+  deleteMusicFaliure,
+  deleteMusicStart,
+  deleteMusicSuccess,
+  searchMusic,
+  InputSearchMusic,
 } = MusicListSlice.actions;
 
 export default MusicListSlice.reducer;
-
-// const initialState = [
-//   {
-//     id: `02`,
-//     Avatar: "",
-//     Artist: `sam smith`,
-//     Title: `Blinding lights`,
-//     Album: `blinding lights`,
-//     Genre: `rock and roll`,
-//     date: sub(new Date(), { minute: 10 }).toISOString(),
-//   },
-//   {
-//     id: `01`,
-//     Artist: `The weekend`,
-//     Title: `Blinding lights `,
-//     Album: `blinding lights`,
-//     Genre: `rock and roll`,
-//     date: sub(new Date(), { years: 3 }).toISOString(),
-//   },
-//   {
-//     id: `00`,
-//     Artist: `sam smith`,
-//     Title: `Blinding lights`,
-//     Album: `blinding lights`,
-//     Genre: `rock and roll`,
-//     date: sub(new Date(), { months: 3 }).toISOString(),
-//   },
-// ];
-
-// const MusicListSlice = createSlice({
-
-//   name: `Music Lists`,
-//   initialState,
-//   reducers: {
-//     musicAdded: {
-//       reducer(state, action) {
-//         console.log(state);
-//         state.push(action.payload);
-//       },
-//       prepare(MusicList) {
-//         return {
-//           payload: {
-//             id: nanoid(),
-//             Artist: MusicList.Artist,
-//             Title: MusicList.Title,
-//             Genre: MusicList.Genre,
-//             date: new Date().toISOString(),
-//           },
-//         };
-//       },
-//     },
-//     updatedMusic(state, action) {
-//       return produce(state, (draftstate) => {
-//         draftstate.Artist = action.payload.Artist;
-//         draftstate.Album = action.payload.Album;
-//         draftstate.Title = action.payload.Title;
-//         draftstate.Genre = action.payload.Genre;
-//         // draftstate.Artist = action.payload.Artist;
-//       });
-//     },
-//   },
-// });

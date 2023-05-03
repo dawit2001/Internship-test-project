@@ -5,68 +5,69 @@ import { Label } from "@rebass/forms";
 import { Box, Button, Flex, Text } from "rebass";
 import { useDispatch, useSelector } from "react-redux";
 import { SelectState, UpdateForm } from "../../Slices/FormSlice";
-import { selectMusicLists } from "../../Slices/MusicListSlice";
-import { updatedMusic } from "../../Slices/MusicListSlice";
+import {
+  selectMusicLists,
+  updateMusicStart,
+} from "../../Slices/MusicListSlice";
 import { AddForm } from "../../Slices/FormSlice";
 
 function UpdateMusicForm() {
   const dispatch = useDispatch();
-  const currentId = useSelector(SelectState);
-  const [currentMusic] = useSelector(selectMusicLists).filter(
-    (music) => music.id === currentId.selectedId
-  );
-  const [MusicList, setMusicList] = useState({
-    id: currentId.selectedId,
+  const { selectedId } = useSelector(SelectState);
+  const { MusicList, Loading, error } = useSelector(selectMusicLists);
+  const [currentMusic] = MusicList.filter((music) => music.id === selectedId);
+  console.log(currentMusic);
+  const [updatedMusicList, setupdatedMusicList] = useState({
+    id: selectedId,
     Artist: currentMusic.Artist,
+    Avatar: currentMusic.Avatar,
     Title: currentMusic.Title,
     Album: currentMusic.Album,
     Genre: currentMusic.Genre,
-    date: currentMusic.date,
+    Audio: currentMusic.Audio,
+    Date: currentMusic.Date,
   });
 
+  console.log(selectedId);
   //handlind change of input values
   const inputChangeHandler = (event) => {
     console.log("inputchangehandler");
     switch (event.target.name) {
       case "artist":
-        setMusicList((prevState) => ({
+        setupdatedMusicList((prevState) => ({
           ...prevState,
           Artist: event.target.value,
         }));
         break;
       case "title":
-        setMusicList((prevState) => ({
+        setupdatedMusicList((prevState) => ({
           ...prevState,
           Title: event.target.value,
         }));
         break;
       case "album":
-        setMusicList((prevState) => ({
+        setupdatedMusicList((prevState) => ({
           ...prevState,
           Album: event.target.value,
         }));
         break;
       case "genre":
-        setMusicList((prevState) => ({
+        setupdatedMusicList((prevState) => ({
           ...prevState,
           Genre: event.target.value,
         }));
         break;
     }
-    setMusicList((prevState) => ({
-      ...prevState,
-      date: `${new Date().toLocaleString("default", {
-        month: "short",
-      })}/${new Date().getDate()}/${new Date().getFullYear()}`,
-    }));
   };
+  console.log(updatedMusicList);
+
   // handling form submission
   const onUpdateForm = (event) => {
     event.preventDefault();
-    if (MusicList) {
-      dispatch(updatedMusic(MusicList));
+    if (updatedMusicList) {
+      dispatch(updateMusicStart(updatedMusicList));
     }
-    setMusicList({});
+    setupdatedMusicList({});
     dispatch(AddForm(false));
     dispatch(UpdateForm(false));
   };
@@ -105,7 +106,7 @@ function UpdateMusicForm() {
             <Label>Artist</Label>
             <input
               name="artist"
-              value={MusicList.Artist}
+              value={updatedMusicList.Artist}
               id="artist"
               type="text"
               onChange={inputChangeHandler}
@@ -113,7 +114,7 @@ function UpdateMusicForm() {
             <Label>Song Title</Label>
             <input
               name="title"
-              value={MusicList.Title}
+              value={updatedMusicList.Title}
               id="title"
               type="text"
               onChange={inputChangeHandler}
@@ -121,7 +122,7 @@ function UpdateMusicForm() {
             <Label>Album</Label>
             <input
               name="album"
-              value={MusicList.Album}
+              value={updatedMusicList.Album}
               id="album"
               type="text"
               onChange={inputChangeHandler}
@@ -131,7 +132,7 @@ function UpdateMusicForm() {
               name="genre"
               id="genre"
               type="text"
-              value={MusicList.Genre}
+              value={updatedMusicList.Genre}
               onChange={inputChangeHandler}
             />
             <Box sx={AddformStyle.audioBox}>

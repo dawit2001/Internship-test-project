@@ -5,24 +5,19 @@ import { nanoid } from "@reduxjs/toolkit";
 import { startSaga } from "../sagas/musiclistsaga";
 
 function* AddMusicAsync(action) {
+  console.log(action);
   try {
-    console.log(action.payload);
     const { Artist, Album, Title, Audio, Genre } = action.payload;
-    const response = yield call(
-      axios.post,
-      "https://my-json-server.typicode.com/dawit2001/music/music",
-      {
-        id: nanoid(),
-        Artist,
-        Album,
-        Title,
-        Audio,
-        date: new Date().toISOString(),
-        Genre,
-      }
-    );
+    const response = yield call(axios.post, " http://localhost:4000/music", {
+      id: nanoid(),
+      Artist,
+      Album,
+      Title,
+      Audio,
+      Date: new Date().toISOString(),
+      Genre,
+    });
     yield put(addMusicSuccess(response.data));
-    // console.log(response.data);
   } catch (error) {
     console.log(error);
     yield put(addMusicFaliure("something wrong.while uploading music"));

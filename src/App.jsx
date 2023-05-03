@@ -4,16 +4,16 @@ import {
   MusicListInfoBar,
   Header,
   AddMusicForm,
-  // UpdateMusicForm,
+  UpdateMusicForm,
 } from "./components";
+import axios from "axios";
 import { useSelector } from "react-redux";
 import { SelectState } from "./Slices/FormSlice";
 import { AppStyle } from "./assets/Style";
 import { Box, Card } from "rebass";
-import logo from "./assets/logo.svg";
+import { nanoid } from "@reduxjs/toolkit";
 function App() {
   const formStates = useSelector(SelectState);
-  // console.log(formStates);
 
   return (
     <Card sx={AppStyle.card}>
@@ -30,17 +30,12 @@ function App() {
 }
 
 export default App;
-
-// const fetchdata = async () => {
-//   try {
-//     const response = await fetch("https://jsonplaceholder.typicode.com/posts");
-//     const data = await response.json();
-//     console.log(data);
-//   } catch (error) {
-//     console.log(error.message);
-//   }
-// };
-// fetchdata();
-
-// const imgurl = URL.createObjectURL(logo);
-// console.log(imgurl);
+const data1 = {
+  Artist: " dawit tsige",
+  Album: "come on man",
+  Title: "ethiopia",
+  Audio: "",
+  Date: "2023-05-03T13:52:37.626Z",
+  Genre: " reggae",
+  id: "VC_mWMFxVX6jIZz",
+};

@@ -12,7 +12,7 @@ const scrollbar = `-webkit-scrollbar-track `;
 //style for the app component
 export const AppStyle = {
   box: css({
-    width: "70%",
+    width: "80%",
     height: "100%",
     borderRadius: "10px",
     [mq[3]]: {
@@ -203,7 +203,7 @@ export const MusicListStyle = {
     wordBreak: `break-all`,
   }),
   Image: css({
-    width: `50px`,
+    width: `100px`,
     height: `50px`,
     borderRadius: `5px`,
     backgroundColor: `blue`,
@@ -256,6 +256,7 @@ export const AddformStyle = {
     position: absolute;
     top: 0;
     left: 0;
+    filter: blur(100px);
   `,
   container: css`
     left: 16%;

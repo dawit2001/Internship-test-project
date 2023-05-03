@@ -22,7 +22,6 @@ const FormSlice = createSlice({
   },
 });
 export const SelectState = (state) => {
-  // console.log(state);
   return state.FormData;
 };
 export const { AddForm, UpdateForm, SelectedId } = FormSlice.actions;

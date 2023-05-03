@@ -10,6 +10,7 @@ function MusicListInfoBar() {
           Artist
         </Text>
         <Text width={`20%`}>Title</Text>
+        <Text width={`20%`}>Album</Text>
         <Text width={`20%`}>Genre</Text>
         <Text width={`35%`}>Date added</Text>
       </Flex>

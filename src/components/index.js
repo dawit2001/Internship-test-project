@@ -3,7 +3,7 @@ import MusicListInfoBar from "./MusicListInfoBar";
 import Header from "./Header";
 import UserOption from "./UserOption";
 import AddMusicForm from "./overlays/AddMusicForm";
-// import UpdateMusicForm from "./overlays/updateMusicForm";
+import UpdateMusicForm from "./overlays/updateMusicForm";
 
 export {
   MusicList,
@@ -11,5 +11,5 @@ export {
   Header,
   UserOption,
   AddMusicForm,
-  // UpdateMusicForm,
+  UpdateMusicForm,
 };
