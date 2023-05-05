@@ -26,7 +26,7 @@ Update a specific music item by ID.
 DELETE /api/music/id.json
 Delete a specific music item by ID.
 
-Technologies Used
+Technologies Used : 
 vite
 reactjs
 Firebase Database
