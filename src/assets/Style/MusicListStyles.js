@@ -145,7 +145,7 @@ export const MusicListStyle = {
             top:10px;
             left:80%;   
             display:flex;        
-            justify-content:center: 
+            justify-content:center; 
             color:#f5f6f7;  
             ${mq[1]} {
               position:absolute;
@@ -158,13 +158,14 @@ export const MusicListStyle = {
             `,
 
   NoMusicAdded: css`
-            width: 100%;
-            height: 10%;
-            margin-top: 15%;
-            font-size: 30px;
-            text-align: center;
-            background-color: #3A4840d9;
-            border-radius:5px;           
-            justify-content:center:
-            color:#f5f6f7; `,
+    width: 100%;
+    height: 10%;
+    margin-top: 15%;
+    font-size: 30px;
+    text-align: center;
+    background-color: #3a4840d9;
+    border-radius: 5px;
+    justify-content: center;
+    color: #f5f6f7;
+  `,
 };
