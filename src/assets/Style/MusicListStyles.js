@@ -101,7 +101,7 @@ export const MusicListStyle = {
     },
   }),
   Text: css({
-    width: `25%`,
+    width: `20%`,
     wordBreak: `break-all`,
     [mq[1]]: {
       width: `60%`,

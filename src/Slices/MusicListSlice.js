@@ -23,7 +23,10 @@ const MusicListSlice = createSlice({
     },
     fetchMusicSuccess(state, action) {
       state.Loading = false;
-      action.payload.map((payload) => state.MusicList.push(payload));
+      state.MusicList = action.payload
+        .map((payload) => payload)
+        .sort((a, b) => new Date(b.Date) - new Date(a.Date));
+
       state.error = null;
     },
     fetchKeysSuccess(state, action) {
