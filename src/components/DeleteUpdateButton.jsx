@@ -8,8 +8,8 @@ import { deleteMusicStart } from "../Slices/MusicListSlice";
 
 function DeleteUpdateButton({ sx, Id }) {
   const dispatch = useDispatch();
-  // const { selectedId } = useSelector(SelectState);
-  // console.log(selectedId);
+  const { selectedId } = useSelector(SelectState);
+
   return (
     <Card sx={sx}>
       <Button
@@ -17,8 +17,8 @@ function DeleteUpdateButton({ sx, Id }) {
         sx={css`
           cursor: pointer;
           &:hover {
-            background-color: #485a4f;
-            border-radius: 10px;
+            background-color: #485a4ff7;
+            border-radius: 100%;
           }
         `}
         onClick={() => {
@@ -34,8 +34,8 @@ function DeleteUpdateButton({ sx, Id }) {
         sx={css`
           cursor: pointer;
           &:hover {
-            background-color: #485a4f;
-            border-radius: 10px;
+            background-color: #485a4fd9;
+            border-radius: 100%;
           }
         `}
         onClick={() => {

@@ -10,15 +10,22 @@ import {
   updateMusicStart,
 } from "../../Slices/MusicListSlice";
 import { AddForm } from "../../Slices/FormSlice";
+import Form from "./Form";
 
 function UpdateMusicForm() {
   const dispatch = useDispatch();
   const { selectedId } = useSelector(SelectState);
-  const { MusicList, Loading, error } = useSelector(selectMusicLists);
-  const [currentMusic] = MusicList.filter((music) => music.id === selectedId);
-  console.log(currentMusic);
+  const { MusicList, Loading, error, FetchedDatakeys } =
+    useSelector(selectMusicLists);
+
+  // selected music
+  const [currentMusic] = MusicList.filter(
+    (music, i) => FetchedDatakeys[i] === selectedId
+  );
+
+  //
   const [updatedMusicList, setupdatedMusicList] = useState({
-    id: selectedId,
+    id: currentMusic.id,
     Artist: currentMusic.Artist,
     Avatar: currentMusic.Avatar,
     Title: currentMusic.Title,
@@ -28,10 +35,8 @@ function UpdateMusicForm() {
     Date: currentMusic.Date,
   });
 
-  console.log(selectedId);
   //handlind change of input values
   const inputChangeHandler = (event) => {
-    console.log("inputchangehandler");
     switch (event.target.name) {
       case "artist":
         setupdatedMusicList((prevState) => ({
@@ -59,13 +64,12 @@ function UpdateMusicForm() {
         break;
     }
   };
-  console.log(updatedMusicList);
 
   // handling form submission
   const onUpdateForm = (event) => {
     event.preventDefault();
     if (updatedMusicList) {
-      dispatch(updateMusicStart(updatedMusicList));
+      dispatch(updateMusicStart({ key: selectedId, data: updatedMusicList }));
     }
     setupdatedMusicList({});
     dispatch(AddForm(false));
@@ -87,21 +91,6 @@ function UpdateMusicForm() {
           method="post"
           onSubmit={onUpdateForm}
         >
-          <Box sx={AddformStyle.ImageBox}>
-            <Label htmlFor="profile">
-              <FaImage id="image" />
-              <Text>Add picture</Text>
-            </Label>
-            <input
-              type="file"
-              id="profile"
-              name="profile"
-              accept="Image/*"
-              hidden
-              onChange={inputChangeHandler}
-            />
-          </Box>
-
           <Box sx={AddformStyle.InputBox}>
             <Label>Artist</Label>
             <input
@@ -128,31 +117,31 @@ function UpdateMusicForm() {
               onChange={inputChangeHandler}
             />
             <Label>Genre</Label>
-            <input
-              name="genre"
+            <select
               id="genre"
               type="text"
-              value={updatedMusicList.Genre}
               onChange={inputChangeHandler}
-            />
-            <Box sx={AddformStyle.audioBox}>
-              <Label htmlFor="audio">
-                <Text>Audio file</Text>
-                <FaMusic size={`30px`} height={`30px`} id="AudioImg" />
-              </Label>
-              <input
-                name=""
-                id="audio"
-                type="file"
-                accept="audio/*"
-                hidden
-                onChange={inputChangeHandler}
-              />{" "}
-            </Box>
+              name="genre"
+              value={updatedMusicList.Genre}
+            >
+              <option></option>
+              <option value={"Pop"}>Pop</option>
+              <option value={"Hip-hop/Rap"}>Hip-hop/Rap</option>
+              <option value={"Electronic/Dance"}>Electronic/Dance</option>
+              <option value="R&B/Soul">R&B/Soul</option>
+              <option value="Jazz">Jazz</option>
+              <option value={"Reggae"}>Reggae</option>
+              <option value={"Classical"}>Classical</option>
+              <option value={"Latin"}>Latin</option>
+              <option value={"Instrumental"}>Instrumental</option>
+              <option value={"Opera"}>Opera</option>
+              <option value={"Children's music"}>Children's music</option>
+              <option value={"Ethiopian"}>Ethiopian</option>
+            </select>
 
             <Box sx={AddformStyle.ButtonBox}>
               <Button id="btn1" bg={`#37A2BA`}>
-                ADD
+                Update
               </Button>
               <Button
                 id="btn2"

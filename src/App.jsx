@@ -6,12 +6,14 @@ import {
   AddMusicForm,
   UpdateMusicForm,
 } from "./components";
-import axios from "axios";
+// import axios from "axios";
 import { useSelector } from "react-redux";
 import { SelectState } from "./Slices/FormSlice";
 import { AppStyle } from "./assets/Style";
 import { Box, Card } from "rebass";
-import { nanoid } from "@reduxjs/toolkit";
+import axios from "axios";
+// import { nanoid } from "@reduxjs/toolkit";
+
 function App() {
   const formStates = useSelector(SelectState);
 
@@ -39,3 +41,11 @@ const data1 = {
   Genre: " reggae",
   id: "VC_mWMFxVX6jIZz",
 };
+
+// const getdata = async () => {
+//   const response = await axios.get(
+//     "https://internship-project-54a7e-default-rtdb.firebaseio.com/music.json?Album"
+//   );
+//   console.log(response);
+// };
+// getdata();

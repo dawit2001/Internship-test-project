@@ -7,23 +7,13 @@ import axios from "axios";
 import { startSaga } from "./musiclistsaga";
 
 function* updateMusicAsync(action) {
-  const { id, Artist, Album, Title, Audio, Date, Avatar, Genre } =
-    action.payload;
+  const { key, data } = action.payload;
   try {
     const response = yield call(
       axios.put,
-      `http://localhost:4000/music/${id}`,
-      {
-        Artist,
-        Album,
-        Title,
-        Audio,
-        Date,
-        Avatar,
-        Genre,
-      }
+      `https://internship-project-54a7e-default-rtdb.firebaseio.com/music/${key}.json`,
+      data
     );
-    console.log("updated successfully", response.data);
     yield put(updateMusicSuccess(response.data));
   } catch (error) {
     console.log(error);

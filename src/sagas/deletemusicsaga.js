@@ -7,14 +7,27 @@ import axios from "axios";
 import { startSaga } from "./musiclistsaga";
 
 function* deletMusicAsync(action) {
-  const id = action.payload;
+  console.log(action.payload);
+  const key = action.payload;
   try {
     const response = yield call(
       axios.delete,
-      `http://localhost:4000/music/${id}`
+      `https://internship-project-54a7e-default-rtdb.firebaseio.com/music/${key}.json`
     );
-    console.log("deleted successfully", response);
-    yield put(deleteMusicSuccess(id));
+
+    // fetching  remaining data after user deletes a music
+    const response2 = yield call(
+      axios.get,
+      `https://internship-project-54a7e-default-rtdb.firebaseio.com/music.json`
+    );
+
+    if (!response2.data) {
+      yield put(deleteMusicSuccess({ key: [], data: [] }));
+    } else {
+      const keys = [...Object.entries(response2.data).map((data) => data[0])];
+      const music = [...Object.entries(response2.data).map((data) => data[1])];
+      yield put(deleteMusicSuccess({ key: keys, data: music }));
+    }
   } catch (error) {
     console.log(error);
     yield put(deleteMusicFaliure("something wrong while Deleting the music"));

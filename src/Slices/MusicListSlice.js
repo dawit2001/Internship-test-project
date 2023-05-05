@@ -4,6 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const initialState = {
   MusicList: [],
   searchedMusic: [],
+  FetchedDatakeys: [],
   isSearching: false,
   Loading: false,
   error: null,
@@ -25,6 +26,11 @@ const MusicListSlice = createSlice({
       action.payload.map((payload) => state.MusicList.push(payload));
       state.error = null;
     },
+    fetchKeysSuccess(state, action) {
+      state.Loading = false;
+      action.payload.map((payload) => state.FetchedDatakeys.push(payload));
+      state.error = null;
+    },
     fetchMusicFaliure(state, action) {
       state.Loading = false;
       state.error = action.payload;
@@ -42,7 +48,8 @@ const MusicListSlice = createSlice({
     addMusicSuccess(state, action) {
       return {
         ...state,
-        MusicList: [...state.MusicList, { ...action.payload }],
+        FetchedDatakeys: [...state.FetchedDatakeys, action.payload.key],
+        MusicList: [...state.MusicList, { ...action.payload.data }],
         Loading: false,
       };
     },
@@ -56,7 +63,8 @@ const MusicListSlice = createSlice({
 
     // reducers to update Music list data
 
-    updateMusicStart(state) {
+    updateMusicStart(state, action) {
+      console.log(action.payload);
       return {
         ...state,
         Loading: true,
@@ -95,11 +103,11 @@ const MusicListSlice = createSlice({
       };
     },
     deleteMusicSuccess(state, action) {
+      console.log(action.payload.key);
       return {
         ...state,
-        MusicList: [
-          ...state.MusicList.filter((music) => music.id !== action.payload),
-        ],
+        FetchedDatakeys: [...action.payload.key],
+        MusicList: [...action.payload.data],
         Loading: false,
       };
     },
@@ -110,6 +118,7 @@ const MusicListSlice = createSlice({
         error: action.payload,
       };
     },
+
     // reducers to search for music
     InputSearchMusic(state, action) {
       state.isSearching = action.payload;
@@ -117,10 +126,22 @@ const MusicListSlice = createSlice({
     searchMusic(state, action) {
       state.searchedMusic = [
         ...state.MusicList.map((music) => {
-          if (music.Artist.includes(action.payload)) return music;
-          else if (music.Title.includes(action.payload)) return music;
-          else if (music.Album.includes(action.payload)) return music;
-          else if (music.Genre.includes(action.payload)) return music;
+          if (music.Artist.toLowerCase().includes(action.payload.toLowerCase()))
+            return music;
+          else if (
+            music.Title.toLowerCase()
+              .toLowerCase()
+              .includes(action.payload.toLowerCase())
+          )
+            return music;
+          else if (
+            music.Album.toLowerCase().includes(action.payload.toLowerCase())
+          )
+            return music;
+          else if (
+            music.Genre.toLowerCase().includes(action.payload.toLowerCase())
+          )
+            return music;
         }),
       ];
     },
@@ -145,6 +166,7 @@ export const {
   deleteMusicSuccess,
   searchMusic,
   InputSearchMusic,
+  fetchKeysSuccess,
 } = MusicListSlice.actions;
 
 export default MusicListSlice.reducer;

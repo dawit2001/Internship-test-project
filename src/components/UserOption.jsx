@@ -3,7 +3,7 @@ import { useState } from "react";
 import { AddForm } from "../Slices/FormSlice";
 import { userOptionsStyle } from "../assets/Style";
 import { BiPlus, BiSearch } from "react-icons/bi";
-import { Box, Card, Button, Text, Flex } from "rebass";
+import { Button, Text, Flex } from "rebass";
 import { Input } from "@rebass/forms";
 import {
   searchMusic,
@@ -15,11 +15,14 @@ function UserOption() {
   const dispatch = useDispatch();
   const [searchedData, setSearchedData] = useState("");
 
+  // function  called when user strikes enter button/ when user submits its query
   const onSearchMusic = (event) => {
     event.preventDefault();
     dispatch(searchMusic(searchedData));
     dispatch(InputSearchMusic(false));
   };
+
+  // function called on each keystorke
   const onInputFilled = (event) => {
     if (event.target.value !== "") {
       setSearchedData(event.target.value);
@@ -29,6 +32,7 @@ function UserOption() {
       dispatch(InputSearchMusic(false));
     }
   };
+
   return (
     <Flex sx={userOptionsStyle.ContainerFlex}>
       <Button
