@@ -17,6 +17,7 @@ function RenderMusicList({ music, Id }) {
       </Text>
       <Text sx={MusicListStyle.Text}>{music.Album.toUpperCase()}</Text>
       <Text sx={MusicListStyle.Text}>{music.Genre}</Text>
+
       <DateAdded timeStamp={music.Date} sx={MusicListStyle.DateText} />
       <DeleteUpdateButton sx={MusicListStyle.ButtonContainer} Id={Id} />
     </Card>

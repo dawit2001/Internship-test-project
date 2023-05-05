@@ -49,7 +49,9 @@ const MusicListSlice = createSlice({
       return {
         ...state,
         FetchedDatakeys: [...state.FetchedDatakeys, action.payload.key],
-        MusicList: [...state.MusicList, { ...action.payload.data }],
+        MusicList: [...state.MusicList, { ...action.payload.data }].sort(
+          (a, b) => new Date(b.Date) - new Date(a.Date)
+        ),
         Loading: false,
       };
     },

@@ -124,6 +124,7 @@ export const MusicListStyle = {
   }),
   DateText: css({
     wordBreak: `break-all`,
+    width: `25%`,
     marginRight: `100px`,
     [mq[2]]: {
       marginRight: `70px`,
