@@ -33,9 +33,8 @@ export const MusicListStyle = {
         padding: 4px;
         gap: 1rem;
       },
-      ${mq[2]} {
-        padding: 4px;
-        gap: 1rem;
+      ${mq[1]} {
+        height:90%;
       },
     `,
 
