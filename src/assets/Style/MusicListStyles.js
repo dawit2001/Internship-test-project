@@ -44,7 +44,7 @@ export const MusicListStyle = {
     display: `flex`,
     backgroundColor: `#3A4840`,
     padding: `5px`,
-    gap: `2.5rem`,
+    gap: `1.5rem`,
     fontFamily: `'Montserrat', sans-serif`,
     color: `white`,
     alignItems: `center`,
@@ -100,7 +100,7 @@ export const MusicListStyle = {
     },
   }),
   Text: css({
-    width: `20%`,
+    width: `19.5%`,
     wordBreak: `break-all`,
     [mq[1]]: {
       width: `60%`,
@@ -123,7 +123,7 @@ export const MusicListStyle = {
   }),
   DateText: css({
     wordBreak: `break-all`,
-    width: `25%`,
+    width: `30%`,
     marginRight: `100px`,
     [mq[2]]: {
       marginRight: `70px`,

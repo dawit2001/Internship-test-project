@@ -32,7 +32,7 @@ export const BarStyle = {
     },
   }),
   text: css({
-    marginLeft: `120px`,
+    marginLeft: `150px`,
     [mq[2]]: {
       marginLeft: `100px`,
       wordBreak: `break-all`,
