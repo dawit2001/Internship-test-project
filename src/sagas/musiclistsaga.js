@@ -19,6 +19,7 @@ function* fetchMusicListAsync() {
     if (data) {
       const keys = [...Object.entries(data).map((music) => music[0])];
       const music = [...Object.entries(data).map((music) => music[1])];
+      console.log(keys);
       status = yield response.statusText;
       yield put(fetchMusicSuccess(music));
       yield put(fetchKeysSuccess(keys));

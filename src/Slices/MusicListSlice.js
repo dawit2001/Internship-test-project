@@ -23,10 +23,7 @@ const MusicListSlice = createSlice({
     },
     fetchMusicSuccess(state, action) {
       state.Loading = false;
-      state.MusicList = action.payload
-        .map((payload) => payload)
-        .sort((a, b) => new Date(b.Date) - new Date(a.Date));
-
+      state.MusicList = action.payload.map((payload) => payload);
       state.error = null;
     },
     fetchKeysSuccess(state, action) {
@@ -52,9 +49,7 @@ const MusicListSlice = createSlice({
       return {
         ...state,
         FetchedDatakeys: [...state.FetchedDatakeys, action.payload.key],
-        MusicList: [...state.MusicList, { ...action.payload.data }].sort(
-          (a, b) => new Date(b.Date) - new Date(a.Date)
-        ),
+        MusicList: [...state.MusicList, { ...action.payload.data }],
         Loading: false,
       };
     },
@@ -86,7 +81,7 @@ const MusicListSlice = createSlice({
             }
             return music;
           }),
-        ].sort((a, b) => new Date(b.Date) - new Date(a.Date)),
+        ],
         Loading: false,
       };
     },
@@ -112,9 +107,7 @@ const MusicListSlice = createSlice({
       return {
         ...state,
         FetchedDatakeys: [...action.payload.key],
-        MusicList: [...action.payload.data].sort(
-          (a, b) => new Date(b.Date) - new Date(a.Date)
-        ),
+        MusicList: [...action.payload.data],
         Loading: false,
       };
     },

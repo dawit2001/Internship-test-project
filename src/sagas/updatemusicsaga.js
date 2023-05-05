@@ -8,6 +8,7 @@ import { startSaga } from "./musiclistsaga";
 
 function* updateMusicAsync(action) {
   const { key, data } = action.payload;
+  console.log(key);
   try {
     const response = yield call(
       axios.put,

@@ -27,6 +27,7 @@ function* deletMusicAsync(action) {
       const keys = [...Object.entries(response2.data).map((data) => data[0])];
       const music = [...Object.entries(response2.data).map((data) => data[1])];
       yield put(deleteMusicSuccess({ key: keys, data: music }));
+      console.log(keys);
     }
   } catch (error) {
     console.log(error);
