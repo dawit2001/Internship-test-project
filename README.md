@@ -1,7 +1,7 @@
 # Internship-test-project1
 
 
-Music List App
+Addis Music List App
 This is a music list app built using a REST API on Firebase database. It allows you to create, read, update, and delete music items from a database using HTTP requests.
 
 Try it 
