@@ -5,7 +5,7 @@ Music List App
 This is a music list app built using a REST API on Firebase database. It allows you to create, read, update, and delete music items from a database using HTTP requests.
 
 Try it 
-[abebewondwosen.com]
+https://addismusiclist.netlify.app/
 
 
 Usage
